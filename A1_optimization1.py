@@ -1,5 +1,4 @@
 import time
-import json
 import re
 from mpi4py import MPI
 from collections import defaultdict
@@ -31,7 +30,6 @@ def merge_dict(dict1, dict2):
 
 
 term = 0
-# count = 0
 pattern = r'created_at":\s*"(.*?)".*?"sentiment":\s*(-?\d+(\.\d+)?)'
 
 # open file
@@ -43,7 +41,7 @@ with open('./twitter-50mb.json', 'r', encoding='utf-8') as tweet_file:
             continue
 
         matches = re.findall(pattern, tweet_str)
-        if not len(matches) :
+        if not len(matches):
             continue
 
         created_at = matches[0][0]
@@ -60,33 +58,6 @@ with open('./twitter-50mb.json', 'r', encoding='utf-8') as tweet_file:
         #     f.write(str(matches[0][0]) + str(matches[0][1]))
         term += 1
 
-#     # processing data
-#     term = 0
-#     for tweet in tweets:
-#         # print(term)
-#         if term % size != rank or (len(tweet) < 1):
-#             term += 1
-#             continue
-#         tweet_data = tweet.get('doc').get('data')
-#         # if tweet_data is not None:
-#
-#         # get date and hour, doc -> data -> created_at, get sentiment, doc -> data -> sentiment
-#         created_at = tweet_data.get('created_at').split('T')
-#         day = created_at[0]
-#         hour = created_at[1].split(':')[0]
-#         sentiment_score = tweet_data.get('sentiment')
-#         if not isinstance(sentiment_score, float) and not (isinstance(sentiment_score, int)):
-#             sentiment_score = 0
-#
-#         # add data into dict
-#         most_active_hour_dict[hour] += 1
-#         most_active_day_dict[day] += 1
-#         happiest_hour_dict[hour] += sentiment_score
-#         happiest_day_dict[day] += sentiment_score
-#
-#         # with open('output.txt', 'w', encoding='utf-8') as f:
-#         #     f.write('hour: ' + hour + ' day: ' + day + ' sentiment_score: ' + str(sentiment_score))
-#         term += 1
 
 # gather result from children
 gathered_dict_lists = communicator.gather([happiest_hour_dict, happiest_day_dict, most_active_hour_dict,
@@ -111,11 +82,6 @@ if rank == 0:
     print("Happiest Day: " + str(sorted_happiest_day[-1]))
     print("Most active Hour: " + str(sorted_active_hour[-1]))
     print("Most active Day: " + str(sorted_activate_day[-1]))
-#
-#     # todo: print time spend
+
     print(time.time() - start_time)
 
-# check output of file
-# with open('output.txt', 'w', encoding='utf-8') as f:
-#     f.write(str(tweets[0]))
-# print(tweets)
