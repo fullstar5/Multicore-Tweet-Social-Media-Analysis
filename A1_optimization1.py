@@ -33,7 +33,7 @@ term = 0
 pattern = r'created_at":\s*"(.*?)".*?"sentiment":\s*(-?\d+(\.\d+)?)'
 
 # open file
-with open('./twitter-50mb.json', 'r', encoding='utf-8') as tweet_file:
+with open('./twitter-100gb.json', 'r', encoding='utf-8') as tweet_file:
     while (tweet_str := tweet_file.readline()) != '{}]}\n':
 
         if term % size != rank:
@@ -81,7 +81,6 @@ if rank == 0:
     print("Happiest Hour: " + str(sorted_happiest_hour[-1]))
     print("Happiest Day: " + str(sorted_happiest_day[-1]))
     print("Most active Hour: " + str(sorted_active_hour[-1]))
-    print("Most active Day: " + str(sorted_activate_day[-1]))
+    print("Most active Day: " + str(sorted_activate_day[-1][0]) + " with " + str(sorted_activate_day[-1][1]))
 
     print(time.time() - start_time)
-

@@ -35,7 +35,7 @@ def utf8len(s):
 
 
 # split file into equal size of chunk based on rank
-FILE = 'twitter-50mb.json'
+FILE = 'twitter-100gb.json'
 pattern_created_at = r'created_at":\s*"(.*?)"'
 pattern_sentiment = r'"sentiment":\s*(-?\d+(\.\d+)?)'
 file_size = os.path.getsize(FILE)
