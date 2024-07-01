@@ -21,3 +21,5 @@ The approach file will be running on a 100GB file with the best approach we impl
 (optimization3) by default, only need to type following commands to run each task: “sbatch
 1node1task.slurm”, “sbatch 1node8tasks.slurm”, “sbatch 2nodes8tasks.slurm”<p>
 
+**Performance Analysis**
+<p>see the report</p>
